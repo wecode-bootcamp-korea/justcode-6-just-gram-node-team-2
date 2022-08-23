@@ -13,26 +13,20 @@ const createUser = async (req, res) => {
       profile_image
     );
     res.status(201).json({ message: "userCreated" });
-  } catch {
+  } catch(err) {
+    console.log(err)
     res.status(500).json({ message: "Signup Error" });
   }
 };
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-
   try {
-    const user = await userService.loginUser(email, password);
-    if (user === 1) {
-      res.status(500).json({ message: "USER CANNOT BE FOUND" });
-    }
-    if (user === 2) {
-      res.status(500).json({ message: "INVALID PASSWORD" });
-    } else {
-      res.status(200).json({ message: "LOGIN_SUCCESS", token: user });
-    }
-  } catch {
-    res.status(500).json({ message: "LOGIN_ERROR" });
+    const token = await userService.loginUser(email, password);
+    res.status(200).json({ message: "LOGIN_SUCCESS", token});
+  } catch(err) {
+    console.log(err)
+    res.status(err.statusCode || 500).json(err.message);
   }
 };
 

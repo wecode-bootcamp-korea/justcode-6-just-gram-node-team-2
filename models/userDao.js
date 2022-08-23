@@ -27,7 +27,8 @@ const createUser = async (email, nickname, hashedPw, profile_image) => {
   );
 };
 
-const loginUser = async (email) => {
+// ____어떤 데이터를 C,R,U,D
+const findUserByEmail = async (email) => {
   const [userAccount] = await myDataSource.query(
     `SELECT id, email, nickname, password FROM users where email = ?`,
     [email]
@@ -35,4 +36,4 @@ const loginUser = async (email) => {
   return userAccount;
 };
 
-module.exports = { createUser, loginUser };
+module.exports = { createUser, findUserByEmail };
