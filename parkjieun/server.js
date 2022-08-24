@@ -1,16 +1,9 @@
 const dotenv = require("dotenv");
 dotenv.config();
-
 const http = require("http");
-const cors = require("cors");
-const express = require("express");
+const { createApp } = require("./app");
 
-const router = require("./routers");
-const { query } = require("express");
-
-const app = express();
-app.use(cors(), express.json());
-app.use(router);
+const app = createApp();
 
 const server = http.createServer(app);
 
